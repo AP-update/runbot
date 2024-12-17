@@ -32,3 +32,10 @@ jobs:
       run: |
         cd runbot
         npm install
+
+    # Step 5: Start the npm application
+    - name: Start the application
+      run: |
+        cd runbot
+        npm start
+        
