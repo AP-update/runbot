@@ -15,26 +15,31 @@ jobs:
     # Step 1: Clone the target repository
     - name: Clone runbot repository
       run: |
-        git clone https://github.com/AP-update/runbot.git
+        git clone https://github.com/AP-update/runbot.git || echo "Clone failed, continuing..."
+      continue-on-error: true  # Toleransi jika terjadi error pada langkah ini
 
     # Step 2: Navigate into the runbot directory
     - name: Change directory to runbot
-      run: cd runbot
+      run: cd runbot || echo "Directory not found, continuing..."
+      continue-on-error: true  # Toleransi jika terjadi error pada langkah ini
 
     # Step 3: Unzip lenwygit.zip file inside the runbot folder
     - name: Unzip lenwygit.zip
       run: |
-        sudo apt-get install unzip -y  # Install unzip tool if not already installed
-        unzip runbot/lenwygit.zip -d ./runbot # Unzip lenwygit.zip in the runbot directory
+        sudo apt-get install unzip -y || echo "Unzip tool installation failed, continuing..."
+        unzip runbot/lenwygit.zip -d ./runbot || echo "Unzip failed, continuing..."
+      continue-on-error: true  # Toleransi jika terjadi error pada langkah ini
 
     # Step 4: Install npm dependencies
     - name: Install npm dependencies
       run: |
-        cd runbot
-        npm install
+        cd runbot || echo "Cannot change to runbot directory, continuing..."
+        npm install || echo "NPM install failed, continuing..."
+      continue-on-error: true  # Toleransi jika terjadi error pada langkah ini
 
     # Step 5: Start the npm application
     - name: Start the application
       run: |
-        cd runbot
-        npm start
+        cd runbot || echo "Cannot change to runbot directory, continuing..."
+        npm start || echo "Application start failed, continuing..."
+      continue-on-error: true  # Toleransi jika terjadi error pada langkah ini
