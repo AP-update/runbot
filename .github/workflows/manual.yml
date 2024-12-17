@@ -17,31 +17,18 @@ jobs:
       run: |
         git clone https://github.com/AP-update/runbot.git
 
-    # Step 2: Install unzip tool
-    - name: Install unzip tool
-      run: sudo apt-get install unzip -y
+    # Step 2: Navigate into the runbot directory
+    - name: Change directory to runbot
+      run: cd runbot
 
     # Step 3: Unzip lenwygit.zip file inside the runbot folder
     - name: Unzip lenwygit.zip
       run: |
-        unzip runbot/lenwygit.zip -d ./runbot
+        sudo apt-get install unzip -y  # Install unzip tool if not already installed
+        unzip runbot/lenwygit.zip -d ./runbot # Unzip lenwygit.zip in the runbot directory
 
     # Step 4: Install npm dependencies
     - name: Install npm dependencies
       run: |
         cd runbot
         npm install
-
-    # Step 5: Install pm2 for process management
-    - name: Install PM2
-      run: npm install -g pm2
-
-    # Step 6: Start the application using PM2
-    - name: Start the application with PM2
-      run: |
-        cd runbot
-        pm2 start npm --name "runbot" -- start
-
-    # Step 7: Save PM2 process list for restart
-    - name: Save PM2 process list
-      run: pm2 save
